@@ -43,41 +43,53 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="#FFFFFF"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:shadowColor="#000000"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="2" />
+            android:shadowColor="#FF000000"
+            android:shadowDx="1.5"
+            android:shadowDy="1.5"
+            android:shadowRadius="4" />
             
         <TextView
             android:id="@+id/textCenter"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="#FFFFFF"
-            android:textSize="22sp"
+            android:textSize="16sp"
             android:textStyle="bold"
-            android:shadowColor="#000000"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="2"
+            android:shadowColor="#FF000000"
+            android:shadowDx="1.5"
+            android:shadowDy="1.5"
+            android:shadowRadius="4"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:visibility="gone" />
 
         <!-- Sub Text: Notification OR Artist Name -->
         <TextView
             android:id="@+id/textSub"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text=""
             android:textColor="#DDDDDD"
-            android:textSize="14sp"
-            android:shadowColor="#000000"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="2"
-            android:layout_marginTop="4dp" />
+            android:textSize="10sp"
+            android:shadowColor="#FF000000"
+            android:shadowDx="1.5"
+            android:shadowDy="1.5"
+            android:shadowRadius="4"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_marginTop="2dp" />
             
     </LinearLayout>
 

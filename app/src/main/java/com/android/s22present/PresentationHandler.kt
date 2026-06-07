@@ -62,6 +62,8 @@ class PresentationHandler(context: Context, display: Display?) : Presentation(co
             textCenter.visibility = View.VISIBLE
             
             textCenter.text = Globals.musicTitle.ifEmpty { "Playing Music" }
+            textCenter.isSelected = true
+            textSub.isSelected = true
             textSub.text = Globals.musicArtist
             textSub.visibility = if (Globals.musicArtist.isNotEmpty()) View.VISIBLE else View.GONE
 
@@ -72,17 +74,12 @@ class PresentationHandler(context: Context, display: Display?) : Presentation(co
                 // Dynamic Palette
                 Palette.from(Globals.musicArtwork!!).generate { palette ->
                     if (palette != null) {
-                        val vibrant = palette.getVibrantColor(Color.WHITE)
-                        val lightVibrant = palette.getLightVibrantColor(Color.WHITE)
-                        val dominant = palette.getDominantColor(Color.BLACK)
-                        
-                        // Decide on text color based on background luminance
-                        val isDark = isColorDark(dominant)
-                        val primaryTextColor = if (isDark) Color.WHITE else Color.BLACK
-                        val secondaryTextColor = if (isDark) lightVibrant else palette.getDarkVibrantColor(Color.DKGRAY)
+                        // Extract accent colors that pop against a heavy drop shadow
+                        val accentColor = palette.getLightVibrantColor(palette.getVibrantColor(Color.WHITE))
+                        val secondaryAccentColor = palette.getLightMutedColor(Color.LTGRAY)
 
-                        textCenter.setTextColor(primaryTextColor)
-                        textSub.setTextColor(secondaryTextColor)
+                        textCenter.setTextColor(accentColor)
+                        textSub.setTextColor(secondaryAccentColor)
                     }
                 }
             } else {
@@ -98,6 +95,7 @@ class PresentationHandler(context: Context, display: Display?) : Presentation(co
             if (Globals.showNotifications && Globals.currentNotification.isNotEmpty()) {
                 textSub.text = Globals.currentNotification
                 textSub.visibility = View.VISIBLE
+                textSub.isSelected = true
             } else {
                 textSub.visibility = View.GONE
             }
