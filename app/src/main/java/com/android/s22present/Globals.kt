@@ -3,8 +3,8 @@ package com.android.s22present
 import android.annotation.SuppressLint
 import android.widget.ProgressBar
 import android.widget.TextView
-import com.chibde.visualizer.BarVisualizer
-import com.chibde.visualizer.SquareBarVisualizer
+
+import android.graphics.Bitmap
 
 // This class stores global variables.
 class Globals
@@ -12,18 +12,23 @@ class Globals
     @SuppressLint("StaticFieldLeak")
     companion object
     {
-        // Make Presentation content variable (currently allows for multiple presets, full customization will require more work than this).
-        // UI Element storage. Technically doing this can potentially create a memory leak but this doesn't.
-        lateinit var datefield : TextView
-        lateinit var titlefield : TextView
+        // UI Element storage.
         lateinit var loading : ProgressBar
         lateinit var loadingtext : TextView
-        lateinit var timefield : TextView
-        lateinit var contentfield : TextView
-        var visual : Int = 0
-        lateinit var visualbar: BarVisualizer
-        lateinit var visualsquare: SquareBarVisualizer
+        
         var style = "0"
         var font = "0"
+        var customGifPath = ""
+        var showNotifications = true
+
+        // Media & Notification State
+        var musicPlaying = false
+        var musicTitle = ""
+        var musicArtist = ""
+        var musicArtwork: Bitmap? = null
+        var currentNotification = ""
+        
+        // Callback to notify PresentationHandler of changes
+        var onStateChanged: (() -> Unit)? = null
     }
 }

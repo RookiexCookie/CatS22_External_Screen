@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation("androidx.palette:palette:1.0.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -58,6 +59,5 @@ dependencies {
     implementation("com.github.topjohnwu.libsu:core:${libsuVersion}")
     implementation ("com.github.topjohnwu.libsu:service:${libsuVersion}")
     implementation ("org.lsposed.hiddenapibypass:hiddenapibypass:2.0")
-    implementation("io.github.gautamchibde:audiovisualizer:2.2.5")
 }
 

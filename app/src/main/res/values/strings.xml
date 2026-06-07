@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">S22Present</string>
+    <string name="app_name">Flip Face</string>
     <string name="Current_Presentation">null</string>
     <string name="Date">null</string>
     <string-array name="Styles">
@@ -13,5 +13,7 @@
         <item>Default</item>
         <item>7SEG Style</item>
         <item>Pixel</item>
+        <item>Orbitron</item>
+        <item>VT323 (Terminal)</item>
     </string-array>
 </resources>

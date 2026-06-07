@@ -1,8 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- Base application theme — deep dark blue-black -->
     <style name="Base.Theme.S22Present" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">#3355CC</item>
+        <item name="colorPrimaryVariant">#1A2266</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="android:windowBackground">#0A0A0F</item>
+        <item name="android:statusBarColor">#0A0A0F</item>
+        <item name="android:navigationBarColor">#0A0A0F</item>
     </style>
     <style name="Theme.S22Present" parent="Base.Theme.S22Present" />
 </resources>
