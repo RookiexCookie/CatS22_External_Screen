@@ -37,6 +37,10 @@ class PresentationHandler(context: Context, display: Display?) : Presentation(co
         textSub = findViewById(R.id.textSub)
         imageViewBackground = findViewById(R.id.imageViewBackground)
 
+        // Enable Marquee Scrolling
+        textCenter.isSelected = true
+        textSub.isSelected = true
+
         applySelectedFont()
 
         Globals.onStateChanged = {
@@ -62,8 +66,6 @@ class PresentationHandler(context: Context, display: Display?) : Presentation(co
             textCenter.visibility = View.VISIBLE
             
             textCenter.text = Globals.musicTitle.ifEmpty { "Playing Music" }
-            textCenter.isSelected = true
-            textSub.isSelected = true
             textSub.text = Globals.musicArtist
             textSub.visibility = if (Globals.musicArtist.isNotEmpty()) View.VISIBLE else View.GONE
 
@@ -74,12 +76,11 @@ class PresentationHandler(context: Context, display: Display?) : Presentation(co
                 // Dynamic Palette
                 Palette.from(Globals.musicArtwork!!).generate { palette ->
                     if (palette != null) {
-                        // Extract accent colors that pop against a heavy drop shadow
-                        val accentColor = palette.getLightVibrantColor(palette.getVibrantColor(Color.WHITE))
-                        val secondaryAccentColor = palette.getLightMutedColor(Color.LTGRAY)
+                        val primaryTextColor = palette.getLightVibrantColor(Color.WHITE)
+                        val secondaryTextColor = palette.getLightMutedColor(Color.LTGRAY)
 
-                        textCenter.setTextColor(accentColor)
-                        textSub.setTextColor(secondaryAccentColor)
+                        textCenter.setTextColor(primaryTextColor)
+                        textSub.setTextColor(secondaryTextColor)
                     }
                 }
             } else {
@@ -95,7 +96,6 @@ class PresentationHandler(context: Context, display: Display?) : Presentation(co
             if (Globals.showNotifications && Globals.currentNotification.isNotEmpty()) {
                 textSub.text = Globals.currentNotification
                 textSub.visibility = View.VISIBLE
-                textSub.isSelected = true
             } else {
                 textSub.visibility = View.GONE
             }
@@ -149,15 +149,8 @@ class PresentationHandler(context: Context, display: Display?) : Presentation(co
         textCenter.typeface = selectedFont
         textSub.typeface = selectedFont
         
-        // Base sizes from XML, scaled by user preference
-        val scale = Globals.fontSizeScale
-        textClock.textSize = 18f * scale
-        textCenter.textSize = 16f * scale
-        textSub.textSize = 10f * scale
-    }
-
-    private fun isColorDark(color: Int): Boolean {
-        val darkness = 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255
-        return darkness >= 0.5
+        textClock.textSize = 22f * Globals.fontScale
+        textCenter.textSize = 22f * Globals.fontScale
+        textSub.textSize = 14f * Globals.fontScale
     }
 }

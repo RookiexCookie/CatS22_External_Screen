@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#000000">
 
-    <!-- Background Image: GIF or Album Art -->
     <ImageView
         android:id="@+id/imageViewBackground"
         android:layout_width="match_parent"
@@ -18,7 +17,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/moto_razr_v3_wallpaper_by_willcomb_d12rdmr_fullview" />
 
-    <!-- Subtle dark overlay to ensure text is always readable against bright images -->
     <View
         android:id="@+id/overlay"
         android:layout_width="match_parent"
@@ -36,18 +34,17 @@
         android:gravity="center"
         android:padding="8dp">
 
-        <!-- Center Text: Clock OR Song Name -->
         <TextClock
             android:id="@+id/textClock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="#FFFFFF"
-            android:textSize="18sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             android:shadowColor="#FF000000"
-            android:shadowDx="1.5"
-            android:shadowDy="1.5"
+            android:shadowDx="1"
+            android:shadowDy="1"
             android:shadowRadius="4" />
             
         <TextView
@@ -56,11 +53,11 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="#FFFFFF"
-            android:textSize="16sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             android:shadowColor="#FF000000"
-            android:shadowDx="1.5"
-            android:shadowDy="1.5"
+            android:shadowDx="1"
+            android:shadowDy="1"
             android:shadowRadius="4"
             android:singleLine="true"
             android:ellipsize="marquee"
@@ -70,7 +67,6 @@
             android:focusableInTouchMode="true"
             android:visibility="gone" />
 
-        <!-- Sub Text: Notification OR Artist Name -->
         <TextView
             android:id="@+id/textSub"
             android:layout_width="match_parent"
@@ -78,18 +74,18 @@
             android:gravity="center"
             android:text=""
             android:textColor="#DDDDDD"
-            android:textSize="10sp"
+            android:textSize="14sp"
             android:shadowColor="#FF000000"
-            android:shadowDx="1.5"
-            android:shadowDy="1.5"
+            android:shadowDx="1"
+            android:shadowDy="1"
             android:shadowRadius="4"
+            android:layout_marginTop="4dp"
             android:singleLine="true"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="2"
             android:scrollHorizontally="true"
             android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:layout_marginTop="2dp" />
+            android:focusableInTouchMode="true" />
             
     </LinearLayout>
 

@@ -16,8 +16,9 @@ class Globals
         lateinit var loading : ProgressBar
         lateinit var loadingtext : TextView
         
-        var fontSizeScale = 1.0f
+        var style = "0"
         var font = "0"
+        var fontScale = 1.0f
         var customGifPath = ""
         var showNotifications = true
 

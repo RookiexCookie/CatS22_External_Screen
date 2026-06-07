@@ -21,8 +21,9 @@ class ListenerService : Service() {
         val display1 = displaymanager.displays.getOrNull(1)
 
         val sharedPrefs = getSharedPreferences("s22present_prefs", Context.MODE_PRIVATE)
-        Globals.fontSizeScale = sharedPrefs.getFloat("font_size_scale", 1.0f)
+        Globals.style = sharedPrefs.getString("style", "0") ?: "0"
         Globals.font = sharedPrefs.getString("font", "0") ?: "0"
+        Globals.fontScale = sharedPrefs.getFloat("font_scale", 1.0f)
         Globals.customGifPath = sharedPrefs.getString("custom_gif_path", "") ?: ""
         Globals.showNotifications = sharedPrefs.getBoolean("show_notifications", true)
 

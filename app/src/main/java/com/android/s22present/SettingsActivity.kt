@@ -47,17 +47,17 @@ class SettingsActivity : AppCompatActivity() {
         val sharedPrefs = getSharedPreferences("s22present_prefs", Context.MODE_PRIVATE)
 
         val spinnerFont = findViewById<Spinner>(R.id.spinnerfont)
-        val sliderFontSize = findViewById<Slider>(R.id.sliderFontSize)
+        val sliderFontScale = findViewById<Slider>(R.id.sliderFontScale)
         val switchNotifications = findViewById<Switch>(R.id.switchNotifications)
         val textGifStatus = findViewById<TextView>(R.id.textGifStatus)
 
         // Load current values
         val fontset = sharedPrefs.getString("font", "0") ?: "0"
-        val fontSizeScale = sharedPrefs.getFloat("font_size_scale", 1.0f)
+        val fontScaleValue = sharedPrefs.getFloat("font_scale", 1.0f)
         val showNotifications = sharedPrefs.getBoolean("show_notifications", true)
         
         spinnerFont.setSelection(fontset.toIntOrNull() ?: 0)
-        sliderFontSize.value = fontSizeScale
+        sliderFontScale.value = fontScaleValue.coerceIn(0.5f, 2.0f)
         switchNotifications.isChecked = showNotifications
 
         updateGifStatusText(textGifStatus)
@@ -65,7 +65,7 @@ class SettingsActivity : AppCompatActivity() {
         findViewById<Button>(R.id.buttonPickGif).setOnClickListener {
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                 addCategory(Intent.CATEGORY_OPENABLE)
-                type = "image/*" // Supports jpg, png, gif
+                type = "image/*"
             }
             pickGifLauncher.launch(intent)
         }
@@ -74,20 +74,20 @@ class SettingsActivity : AppCompatActivity() {
             val destFile = File(filesDir, "custom_background.gif")
             if (destFile.exists()) destFile.delete()
             sharedPrefs.edit().remove("custom_gif_path").apply()
-            Toast.makeText(this, "Media Background Cleared", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Media Cleared", Toast.LENGTH_SHORT).show()
             updateGifStatusText(textGifStatus)
         }
 
         findViewById<Button>(R.id.buttonReset).setOnClickListener {
             spinnerFont.setSelection(0)
-            sliderFontSize.value = 1.0f
+            sliderFontScale.value = 1.0f
             switchNotifications.isChecked = true
         }
 
         findViewById<Button>(R.id.buttonsave).setOnClickListener {
             sharedPrefs.edit().apply {
                 putString("font", spinnerFont.selectedItemPosition.toString())
-                putFloat("font_size_scale", sliderFontSize.value)
+                putFloat("font_scale", sliderFontScale.value)
                 putBoolean("show_notifications", switchNotifications.isChecked)
             }.apply()
             
@@ -96,13 +96,13 @@ class SettingsActivity : AppCompatActivity() {
             stopService(serviceintent)
             startService(serviceintent)
             Toast.makeText(this, "Settings Saved", Toast.LENGTH_SHORT).show()
+            finish()
         }
     }
 
     private fun copyGifToInternalStorage(uri: Uri) {
         try {
             contentResolver.openInputStream(uri)?.use { inputStream ->
-                // Still naming it .gif out of habit, ImageDecoder handles all extensions
                 val destFile = File(filesDir, "custom_background.gif")
                 destFile.outputStream().use { outputStream ->
                     inputStream.copyTo(outputStream)
@@ -113,8 +113,8 @@ class SettingsActivity : AppCompatActivity() {
                 updateGifStatusText(findViewById(R.id.textGifStatus))
             }
         } catch (e: Exception) {
-            Log.e("S22PresSetting", "Error copying Media", e)
-            Toast.makeText(this, "Failed to load Media", Toast.LENGTH_SHORT).show()
+            Log.e("S22PresSetting", "Error copying media", e)
+            Toast.makeText(this, "Failed to load media", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -122,9 +122,9 @@ class SettingsActivity : AppCompatActivity() {
         val sharedPrefs = getSharedPreferences("s22present_prefs", Context.MODE_PRIVATE)
         val path = sharedPrefs.getString("custom_gif_path", "")
         if (path.isNullOrEmpty() || !File(path).exists()) {
-            textView.text = "Active Image: None"
+            textView.text = "Custom Media: None"
         } else {
-            textView.text = "Active Image: Custom Media"
+            textView.text = "Custom Media: Active"
         }
     }
 
