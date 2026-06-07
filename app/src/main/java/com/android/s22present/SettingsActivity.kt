@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.Switch
@@ -17,6 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.slider.Slider
 import java.io.File
 
 class SettingsActivity : AppCompatActivity() {
@@ -46,18 +46,18 @@ class SettingsActivity : AppCompatActivity() {
 
         val sharedPrefs = getSharedPreferences("s22present_prefs", Context.MODE_PRIVATE)
 
-        val spinnerStyle = findViewById<Spinner>(R.id.spinnerstyle)
         val spinnerFont = findViewById<Spinner>(R.id.spinnerfont)
+        val sliderFontSize = findViewById<Slider>(R.id.sliderFontSize)
         val switchNotifications = findViewById<Switch>(R.id.switchNotifications)
         val textGifStatus = findViewById<TextView>(R.id.textGifStatus)
 
         // Load current values
-        var styleset = sharedPrefs.getString("style", "0") ?: "0"
-        var fontset = sharedPrefs.getString("font", "0") ?: "0"
-        var showNotifications = sharedPrefs.getBoolean("show_notifications", true)
+        val fontset = sharedPrefs.getString("font", "0") ?: "0"
+        val fontSizeScale = sharedPrefs.getFloat("font_size_scale", 1.0f)
+        val showNotifications = sharedPrefs.getBoolean("show_notifications", true)
         
-        spinnerStyle.setSelection(styleset.toIntOrNull() ?: 0)
         spinnerFont.setSelection(fontset.toIntOrNull() ?: 0)
+        sliderFontSize.value = fontSizeScale
         switchNotifications.isChecked = showNotifications
 
         updateGifStatusText(textGifStatus)
@@ -65,7 +65,7 @@ class SettingsActivity : AppCompatActivity() {
         findViewById<Button>(R.id.buttonPickGif).setOnClickListener {
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                 addCategory(Intent.CATEGORY_OPENABLE)
-                type = "image/gif"
+                type = "image/*" // Supports jpg, png, gif
             }
             pickGifLauncher.launch(intent)
         }
@@ -74,20 +74,20 @@ class SettingsActivity : AppCompatActivity() {
             val destFile = File(filesDir, "custom_background.gif")
             if (destFile.exists()) destFile.delete()
             sharedPrefs.edit().remove("custom_gif_path").apply()
-            Toast.makeText(this, "GIF Background Cleared", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Media Background Cleared", Toast.LENGTH_SHORT).show()
             updateGifStatusText(textGifStatus)
         }
 
         findViewById<Button>(R.id.buttonReset).setOnClickListener {
-            spinnerStyle.setSelection(0)
             spinnerFont.setSelection(0)
+            sliderFontSize.value = 1.0f
             switchNotifications.isChecked = true
         }
 
         findViewById<Button>(R.id.buttonsave).setOnClickListener {
             sharedPrefs.edit().apply {
-                putString("style", spinnerStyle.selectedItemPosition.toString())
                 putString("font", spinnerFont.selectedItemPosition.toString())
+                putFloat("font_size_scale", sliderFontSize.value)
                 putBoolean("show_notifications", switchNotifications.isChecked)
             }.apply()
             
@@ -102,18 +102,19 @@ class SettingsActivity : AppCompatActivity() {
     private fun copyGifToInternalStorage(uri: Uri) {
         try {
             contentResolver.openInputStream(uri)?.use { inputStream ->
+                // Still naming it .gif out of habit, ImageDecoder handles all extensions
                 val destFile = File(filesDir, "custom_background.gif")
                 destFile.outputStream().use { outputStream ->
                     inputStream.copyTo(outputStream)
                 }
                 val sharedPrefs = getSharedPreferences("s22present_prefs", Context.MODE_PRIVATE)
                 sharedPrefs.edit().putString("custom_gif_path", destFile.absolutePath).apply()
-                Toast.makeText(this, "GIF Selected Successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Media Selected Successfully", Toast.LENGTH_SHORT).show()
                 updateGifStatusText(findViewById(R.id.textGifStatus))
             }
         } catch (e: Exception) {
-            Log.e("S22PresSetting", "Error copying GIF", e)
-            Toast.makeText(this, "Failed to load GIF", Toast.LENGTH_SHORT).show()
+            Log.e("S22PresSetting", "Error copying Media", e)
+            Toast.makeText(this, "Failed to load Media", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -121,9 +122,9 @@ class SettingsActivity : AppCompatActivity() {
         val sharedPrefs = getSharedPreferences("s22present_prefs", Context.MODE_PRIVATE)
         val path = sharedPrefs.getString("custom_gif_path", "")
         if (path.isNullOrEmpty() || !File(path).exists()) {
-            textView.text = "Custom GIF: None"
+            textView.text = "Active Image: None"
         } else {
-            textView.text = "Custom GIF: Active"
+            textView.text = "Active Image: Custom Media"
         }
     }
 
@@ -134,9 +135,8 @@ class SettingsActivity : AppCompatActivity() {
             try {
                 val settingsArray = filedir.readText().split("|").toTypedArray()
                 val sharedPrefs = getSharedPreferences("s22present_prefs", Context.MODE_PRIVATE)
-                if (!sharedPrefs.contains("style")) {
+                if (!sharedPrefs.contains("font")) {
                     sharedPrefs.edit().apply {
-                        putString("style", settingsArray.getOrNull(0) ?: "0")
                         putString("font", settingsArray.getOrNull(1) ?: "0")
                     }.apply()
                 }
@@ -147,4 +147,3 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 }
-

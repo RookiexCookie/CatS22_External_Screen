@@ -148,6 +148,12 @@ class PresentationHandler(context: Context, display: Display?) : Presentation(co
         textClock.typeface = selectedFont
         textCenter.typeface = selectedFont
         textSub.typeface = selectedFont
+        
+        // Base sizes from XML, scaled by user preference
+        val scale = Globals.fontSizeScale
+        textClock.textSize = 18f * scale
+        textCenter.textSize = 16f * scale
+        textSub.textSize = 10f * scale
     }
 
     private fun isColorDark(color: Int): Boolean {

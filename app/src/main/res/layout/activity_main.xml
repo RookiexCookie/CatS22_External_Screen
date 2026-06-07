@@ -1,196 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0A0A0F">
+    android:fillViewport="true"
+    android:background="?android:attr/colorBackground">
 
-    <!-- Background gradient -->
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg_gradient" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Flip Face"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:textColor="?android:attr/textColorPrimary"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center" />
+            
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="External Screen Controller"
+            android:textSize="14sp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:layout_marginBottom="32dp"
+            android:layout_gravity="center" />
 
-        <LinearLayout
+        <!-- Status Card -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="?android:attr/colorBackgroundFloating">
 
-            <!-- ── Header ── -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="24dp">
+                android:padding="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="FlipFace"
-                    android:textSize="32sp"
+                    android:text="Service Status"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:letterSpacing="0.02" />
+                    android:textSize="18sp"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:id="@+id/textViewProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Initializing…"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:layout_marginBottom="8dp" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="false"
+                    android:max="3"
+                    android:progress="0" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Actions Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="?android:attr/colorBackgroundFloating">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="External screen controller"
-                    android:textSize="13sp"
-                    android:textColor="#88FFFFFF"
-                    android:layout_marginTop="2dp" />
+                    android:text="Controls"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="16dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonSetting"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="Open Settings"
+                    android:focusable="true"
+                    android:nextFocusDown="@+id/buttonNotify"
+                    app:cornerRadius="16dp"
+                    android:layout_marginBottom="8dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonNotify"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="Notification Access"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:focusable="true"
+                    android:nextFocusUp="@+id/buttonSetting"
+                    app:cornerRadius="16dp" />
             </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-            <!-- ── Status Card ── -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                app:cardBackgroundColor="#1A1A2E"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="18dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="STATUS"
-                        android:textSize="10sp"
-                        android:textColor="#5566CC"
-                        android:letterSpacing="0.15"
-                        android:layout_marginBottom="10dp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-
-                        <View
-                            android:layout_width="8dp"
-                            android:layout_height="8dp"
-                            android:background="@drawable/dot_indicator" />
-
-                        <TextView
-                            android:id="@+id/textViewProgress"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Initializing…"
-                            android:textColor="#CCFFFFFF"
-                            android:textSize="14sp"
-                            android:layout_marginStart="10dp" />
-                    </LinearLayout>
-
-                    <ProgressBar
-                        android:id="@+id/progressBar"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="4dp"
-                        android:layout_marginTop="14dp"
-                        android:indeterminate="false"
-                        android:max="3"
-                        android:progress="0"
-                        android:progressTint="#5566CC"
-                        android:progressBackgroundTint="#33FFFFFF" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- ── Action Buttons ── -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                app:cardBackgroundColor="#1A1A2E"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="18dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="CONTROLS"
-                        android:textSize="10sp"
-                        android:textColor="#5566CC"
-                        android:letterSpacing="0.15"
-                        android:layout_marginBottom="14dp" />
-
-                    <Button
-                        android:id="@+id/buttonSetting"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:text="⚙  Open Settings"
-                        android:textSize="14sp"
-                        android:textColor="#FFFFFF"
-                        android:backgroundTint="#3355CC"
-                        android:layout_marginBottom="10dp"
-                        android:letterSpacing="0.02" />
-
-                    <Button
-                        android:id="@+id/buttonNotify"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:text="🔔  Notification Access"
-                        android:textSize="14sp"
-                        android:textColor="#FFFFFF"
-                        android:backgroundTint="#222240"
-                        android:letterSpacing="0.02" />
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- ── Info Card ── -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="#111128"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="18dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="ABOUT"
-                        android:textSize="10sp"
-                        android:textColor="#5566CC"
-                        android:letterSpacing="0.15"
-                        android:layout_marginBottom="10dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="• Music playing → album art + dynamic colors\n• Long titles scroll like a Walkman\n• Custom GIF or image wallpaper\n• Clock + notifications when idle"
-                        android:textColor="#77AAFFCC"
-                        android:textSize="12sp"
-                        android:lineSpacingMultiplier="1.5" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
+</ScrollView>

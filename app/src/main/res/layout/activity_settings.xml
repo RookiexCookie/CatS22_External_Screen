@@ -4,101 +4,207 @@
     android:id="@+id/settings"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:background="?android:attr/colorBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:padding="16dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Theme Style"
+            android:text="Flip Face Settings"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
-        <Spinner
-            android:id="@+id/spinnerstyle"
+            android:textColor="?android:attr/textColorPrimary"
+            android:layout_marginBottom="24dp"
+            android:layout_gravity="center" />
+
+        <!-- Typography Card -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:entries="@array/Styles"
-            android:focusable="true"
-            android:layout_marginBottom="24dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Font Style"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
-        <Spinner
-            android:id="@+id/spinnerfont"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="?android:attr/colorBackgroundFloating">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Typography"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Font Family"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:layout_marginBottom="8dp" />
+                <Spinner
+                    android:id="@+id/spinnerfont"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:entries="@array/Fonts"
+                    android:focusable="true"
+                    android:nextFocusDown="@+id/sliderFontSize"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Font Size Scale"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:layout_marginBottom="8dp" />
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/sliderFontSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:valueFrom="0.5"
+                    android:valueTo="2.0"
+                    android:value="1.0"
+                    android:stepSize="0.1"
+                    android:focusable="true"
+                    android:nextFocusDown="@+id/buttonPickGif"
+                    android:nextFocusUp="@+id/spinnerfont" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Background Card -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:entries="@array/Fonts"
-            android:focusable="true"
-            android:layout_marginBottom="24dp" />
-
-        <TextView
-            android:id="@+id/textGifStatus"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Custom GIF: None"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="?android:attr/colorBackgroundFloating">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Background"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:id="@+id/textGifStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Active Image: None"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:layout_marginBottom="16dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonPickGif"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Select Media"
+                        android:focusable="true"
+                        android:nextFocusDown="@+id/switchNotifications"
+                        android:nextFocusUp="@+id/sliderFontSize"
+                        android:nextFocusRight="@+id/buttonClearGif"
+                        app:cornerRadius="12dp"
+                        android:layout_marginEnd="8dp" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonClearGif"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:nextFocusDown="@+id/switchNotifications"
+                        android:nextFocusLeft="@+id/buttonPickGif"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        app:cornerRadius="12dp"
+                        android:text="Clear" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Notifications Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="?android:attr/colorBackgroundFloating">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <Switch
+                    android:id="@+id/switchNotifications"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Show On-Screen Notifications"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textStyle="bold"
+                    android:focusable="true"
+                    android:nextFocusDown="@+id/buttonReset"
+                    android:nextFocusUp="@+id/buttonPickGif" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Action Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="24dp">
-            <Button
-                android:id="@+id/buttonPickGif"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Select GIF"
-                android:focusable="true"
-                android:layout_marginEnd="8dp" />
-            <Button
-                android:id="@+id/buttonClearGif"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:focusable="true"
-                android:text="Clear GIF" />
-        </LinearLayout>
-
-        <Switch
-            android:id="@+id/switchNotifications"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Show Notifications on Screen"
-            android:textStyle="bold"
-            android:focusable="true"
-            android:layout_marginBottom="32dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="32dp">
-            <Button
+            android:gravity="center">
+            
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonReset"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reset"
+                android:text="Reset Settings"
                 android:focusable="true"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_marginEnd="8dp" />
-            <Button
+                android:nextFocusRight="@+id/buttonsave"
+                android:nextFocusUp="@+id/switchNotifications"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_marginEnd="16dp" />
+                
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonsave"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:focusable="true"
-                android:text="Save" />
+                android:nextFocusLeft="@+id/buttonReset"
+                android:nextFocusUp="@+id/switchNotifications"
+                app:cornerRadius="16dp"
+                android:text="Save Configuration" />
         </LinearLayout>
+
     </LinearLayout>
 </ScrollView>
