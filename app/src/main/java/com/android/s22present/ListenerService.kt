@@ -23,7 +23,10 @@ class ListenerService : Service() {
         val sharedPrefs = getSharedPreferences("s22present_prefs", Context.MODE_PRIVATE)
         Globals.style = sharedPrefs.getString("style", "0") ?: "0"
         Globals.font = sharedPrefs.getString("font", "0") ?: "0"
-        Globals.fontScale = sharedPrefs.getFloat("font_scale", 1.0f)
+        Globals.titleFontScale = sharedPrefs.getFloat("title_font_scale", 1.0f)
+        Globals.subFontScale = sharedPrefs.getFloat("sub_font_scale", 1.0f)
+        Globals.lineSpacing = sharedPrefs.getFloat("line_spacing", 4.0f) // default 4dp
+        Globals.marqueeInfinite = sharedPrefs.getBoolean("marquee_infinite", true)
         Globals.customGifPath = sharedPrefs.getString("custom_gif_path", "") ?: ""
         Globals.showNotifications = sharedPrefs.getBoolean("show_notifications", true)
 

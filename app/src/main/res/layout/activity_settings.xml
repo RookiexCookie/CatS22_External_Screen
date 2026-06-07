@@ -25,47 +25,104 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Typography"
-                    android:textSize="18sp"
+                    android:text="Typography &amp; Layout"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="16dp" />
 
+                <!-- Font Spinner -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Font Style"
-                    android:layout_marginBottom="8dp" />
+                    android:textSize="16sp"
+                    android:layout_marginBottom="4dp" />
 
                 <Spinner
                     android:id="@+id/spinnerfont"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="52dp"
                     android:entries="@array/Fonts"
                     android:focusable="true"
-                    android:nextFocusDown="@+id/sliderFontScale"
+                    android:nextFocusDown="@+id/sliderTitleScale"
                     android:layout_marginBottom="16dp" />
 
+                <!-- Title Scale -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Font Size Multiplier"
-                    android:layout_marginBottom="8dp" />
+                    android:text="Main Text Size"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="4dp" />
 
                 <com.google.android.material.slider.Slider
-                    android:id="@+id/sliderFontScale"
+                    android:id="@+id/sliderTitleScale"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:valueFrom="0.5"
-                    android:valueTo="2.0"
+                    android:valueTo="2.5"
                     android:stepSize="0.1"
                     android:value="1.0"
                     android:focusable="true"
                     android:nextFocusUp="@+id/spinnerfont"
+                    android:nextFocusDown="@+id/sliderSubScale" />
+
+                <!-- Subtitle Scale -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Subtitle Text Size"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="4dp" />
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/sliderSubScale"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:valueFrom="0.5"
+                    android:valueTo="2.5"
+                    android:stepSize="0.1"
+                    android:value="1.0"
+                    android:focusable="true"
+                    android:nextFocusUp="@+id/sliderTitleScale"
+                    android:nextFocusDown="@+id/sliderSpacing" />
+
+                <!-- Spacing Offset -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Line Spacing (Distance)"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="4dp" />
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/sliderSpacing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:valueFrom="-10.0"
+                    android:valueTo="20.0"
+                    android:stepSize="1.0"
+                    android:value="4.0"
+                    android:focusable="true"
+                    android:nextFocusUp="@+id/sliderSubScale"
+                    android:nextFocusDown="@+id/switchMarquee" />
+
+                <!-- Marquee Switch -->
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switchMarquee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Infinite Text Scrolling"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginTop="8dp"
+                    android:focusable="true"
+                    android:nextFocusUp="@+id/sliderSpacing"
                     android:nextFocusDown="@+id/buttonPickGif" />
 
             </LinearLayout>
@@ -84,13 +141,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Background"
-                    android:textSize="18sp"
+                    android:text="Background Media"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="16dp" />
 
@@ -99,32 +156,36 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Custom Media: None"
-                    android:layout_marginBottom="8dp" />
+                    android:textSize="16sp"
+                    android:layout_marginBottom="16dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/buttonPickGif"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="wrap_content"
+                        android:layout_height="56dp"
                         android:text="Select"
+                        app:cornerRadius="12dp"
                         android:focusable="true"
-                        android:nextFocusUp="@+id/sliderFontScale"
+                        android:nextFocusUp="@+id/switchMarquee"
                         android:nextFocusRight="@+id/buttonClearGif"
                         android:nextFocusDown="@+id/switchNotifications"
                         android:layout_marginEnd="8dp" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/buttonClearGif"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="wrap_content"
+                        android:layout_height="56dp"
+                        app:cornerRadius="12dp"
                         android:focusable="true"
-                        android:nextFocusUp="@+id/sliderFontScale"
+                        android:nextFocusUp="@+id/switchMarquee"
                         android:nextFocusLeft="@+id/buttonPickGif"
                         android:nextFocusDown="@+id/switchNotifications"
                         android:text="Clear" />
@@ -136,7 +197,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="32dp"
             app:cardBackgroundColor="?android:colorBackgroundFloating"
             app:cardCornerRadius="16dp"
             app:cardElevation="2dp">
@@ -145,15 +206,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="20dp">
 
-                <Switch
+                <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/switchNotifications"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Show Notifications"
                     android:textStyle="bold"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:focusable="true"
                     android:nextFocusUp="@+id/buttonPickGif"
                     android:nextFocusDown="@+id/buttonReset" />
@@ -166,11 +227,11 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonReset"
-                style="?android:attr/buttonBarButtonStyle"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:layout_weight="1"
                 android:layout_marginEnd="8dp"
                 android:focusable="true"
@@ -178,11 +239,12 @@
                 android:nextFocusRight="@+id/buttonsave"
                 android:text="Reset" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonsave"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:layout_weight="1"
+                app:cornerRadius="12dp"
                 android:focusable="true"
                 android:nextFocusUp="@+id/switchNotifications"
                 android:nextFocusLeft="@+id/buttonReset"

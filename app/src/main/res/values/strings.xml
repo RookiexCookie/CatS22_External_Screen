@@ -4,9 +4,6 @@
     <string name="Date">null</string>
     <string-array name="Fonts">
         <item>Default</item>
-        <item>7SEG Style</item>
-        <item>Pixel</item>
-        <item>Orbitron</item>
-        <item>VT323 (Terminal)</item>
+        <item>Retro (Terminal)</item>
     </string-array>
 </resources>

@@ -7,11 +7,13 @@ import android.graphics.ImageDecoder
 import android.graphics.Typeface
 import android.graphics.drawable.AnimatedImageDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Display
 import android.view.View
-import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextClock
 import android.widget.TextView
 import androidx.palette.graphics.Palette
@@ -25,21 +27,18 @@ class PresentationHandler(context: Context, display: Display?) : Presentation(co
     private lateinit var imageViewBackground: ImageView
 
     private var gifDrawable: AnimatedImageDrawable? = null
+    private val handler = Handler(Looper.getMainLooper())
+    private val stopGifRunnable = Runnable { gifDrawable?.stop() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window?.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
-        window?.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
+        // Window flags intentionally removed to allow the display to sleep
         setContentView(R.layout.presentation)
 
         textClock = findViewById(R.id.textClock)
         textCenter = findViewById(R.id.textCenter)
         textSub = findViewById(R.id.textSub)
         imageViewBackground = findViewById(R.id.imageViewBackground)
-
-        // Enable Marquee Scrolling
-        textCenter.isSelected = true
-        textSub.isSelected = true
 
         applySelectedFont()
 
@@ -59,11 +58,25 @@ class PresentationHandler(context: Context, display: Display?) : Presentation(co
         gifDrawable?.start()
     }
 
+    override fun onStop() {
+        super.onStop()
+        handler.removeCallbacks(stopGifRunnable)
+    }
+
     private fun updateUI() {
         if (Globals.musicPlaying) {
             // Walkman Mode
             textClock.visibility = View.GONE
             textCenter.visibility = View.VISIBLE
+            
+            // Apply infinite scrolling toggle
+            val repeatLimit = if (Globals.marqueeInfinite) -1 else 1
+            textCenter.marqueeRepeatLimit = repeatLimit
+            textSub.marqueeRepeatLimit = repeatLimit
+            
+            // Enable marquee
+            textCenter.isSelected = true
+            textSub.isSelected = true
             
             textCenter.text = Globals.musicTitle.ifEmpty { "Playing Music" }
             textSub.text = Globals.musicArtist
@@ -93,6 +106,10 @@ class PresentationHandler(context: Context, display: Display?) : Presentation(co
             textClock.visibility = View.VISIBLE
             textCenter.visibility = View.GONE
             
+            // Disable marquee to allow screen sleep
+            textCenter.isSelected = false
+            textSub.isSelected = false
+            
             if (Globals.showNotifications && Globals.currentNotification.isNotEmpty()) {
                 textSub.text = Globals.currentNotification
                 textSub.visibility = View.VISIBLE
@@ -112,7 +129,17 @@ class PresentationHandler(context: Context, display: Display?) : Presentation(co
             if (gifFile.exists()) {
                 try {
                     val source = ImageDecoder.createSource(gifFile)
-                    val drawable = ImageDecoder.decodeDrawable(source)
+                    val drawable = ImageDecoder.decodeDrawable(source) { decoder, info, _ ->
+                        // Optimize GIF RAM Usage by downsampling to screen resolution (max 320px)
+                        val maxDim = 320
+                        val size = info.size
+                        if (size.width > maxDim || size.height > maxDim) {
+                            val scale = java.lang.Math.min(maxDim.toFloat() / size.width, maxDim.toFloat() / size.height)
+                            val newWidth = (size.width * scale).toInt()
+                            val newHeight = (size.height * scale).toInt()
+                            decoder.setTargetSize(newWidth, newHeight)
+                        }
+                    }
                     imageViewBackground.setImageDrawable(drawable)
                     if (drawable is AnimatedImageDrawable) {
                         gifDrawable = drawable
@@ -132,16 +159,10 @@ class PresentationHandler(context: Context, display: Display?) : Presentation(co
     }
 
     private fun applySelectedFont() {
-        val digifont = context.resources.getFont(R.font.digital7)
-        val pixelfont = context.resources.getFont(R.font.dogica)
-        val orbitronfont = context.resources.getFont(R.font.orbitron)
         val vt323font = context.resources.getFont(R.font.vt323)
 
         val selectedFont = when (Globals.font) {
-            "1" -> digifont
-            "2" -> pixelfont
-            "3" -> orbitronfont
-            "4" -> vt323font
+            "1" -> vt323font
             else -> Typeface.DEFAULT
         }
 
@@ -149,8 +170,16 @@ class PresentationHandler(context: Context, display: Display?) : Presentation(co
         textCenter.typeface = selectedFont
         textSub.typeface = selectedFont
         
-        textClock.textSize = 22f * Globals.fontScale
-        textCenter.textSize = 22f * Globals.fontScale
-        textSub.textSize = 14f * Globals.fontScale
+        // Convert dp to px for the margin offset
+        val displayMetrics = context.resources.displayMetrics
+        val spacingPx = (Globals.lineSpacing * displayMetrics.density).toInt()
+        
+        val layoutParams = textSub.layoutParams as LinearLayout.LayoutParams
+        layoutParams.setMargins(layoutParams.leftMargin, spacingPx, layoutParams.rightMargin, layoutParams.bottomMargin)
+        textSub.layoutParams = layoutParams
+
+        textClock.textSize = 22f * Globals.titleFontScale
+        textCenter.textSize = 22f * Globals.titleFontScale
+        textSub.textSize = 14f * Globals.subFontScale
     }
 }

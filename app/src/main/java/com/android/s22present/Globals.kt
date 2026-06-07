@@ -15,10 +15,13 @@ class Globals
         // UI Element storage.
         lateinit var loading : ProgressBar
         lateinit var loadingtext : TextView
-        
         var style = "0"
         var font = "0"
-        var fontScale = 1.0f
+        var fontScale = 1.0f // Deprecated but kept for fallback
+        var titleFontScale = 1.0f
+        var subFontScale = 1.0f
+        var lineSpacing = 0.0f
+        var marqueeInfinite = true
         var customGifPath = ""
         var showNotifications = true
 

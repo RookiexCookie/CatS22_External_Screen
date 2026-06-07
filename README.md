@@ -34,5 +34,4 @@ Welcome to **Flip Face**! This app completely transforms the tiny front screen o
 
 ##  Known Bugs
 
-*   **Always-On Display Battery Drain:** There is a known bug where the external screen stays awake (Always-On) even if you are just using a static image instead of a moving GIF. Flip the phone once more to stop it. 
 *   **Missing Album Art:** Some rare or older music player apps don't share their album art correctly with Android. If this happens, Flip Face will just show a basic music screen without the custom colors.
