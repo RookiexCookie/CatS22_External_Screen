@@ -25,12 +25,6 @@ class PresentationHandler(context: Context, display: Display?) : Presentation(co
     private lateinit var imageViewBackground: ImageView
 
     private var gifDrawable: AnimatedImageDrawable? = null
-    private val handler = android.os.Handler(android.os.Looper.getMainLooper())
-    private val sleepRunnable = Runnable {
-        textCenter.isSelected = false
-        textSub.isSelected = false
-        gifDrawable?.stop()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,16 +51,8 @@ class PresentationHandler(context: Context, display: Display?) : Presentation(co
 
     override fun onStart() {
         super.onStart()
-        startAnimations()
-    }
-
-    private fun startAnimations() {
-        textCenter.isSelected = true
-        textSub.isSelected = true
+        // Restart GIF animation when screen turns on
         gifDrawable?.start()
-        
-        handler.removeCallbacks(sleepRunnable)
-        handler.postDelayed(sleepRunnable, 5000)
     }
 
     private fun updateUI() {
@@ -76,6 +62,8 @@ class PresentationHandler(context: Context, display: Display?) : Presentation(co
             textCenter.visibility = View.VISIBLE
             
             textCenter.text = Globals.musicTitle.ifEmpty { "Playing Music" }
+            textCenter.isSelected = true
+            textSub.isSelected = true
             textSub.text = Globals.musicArtist
             textSub.visibility = if (Globals.musicArtist.isNotEmpty()) View.VISIBLE else View.GONE
 
@@ -107,6 +95,7 @@ class PresentationHandler(context: Context, display: Display?) : Presentation(co
             if (Globals.showNotifications && Globals.currentNotification.isNotEmpty()) {
                 textSub.text = Globals.currentNotification
                 textSub.visibility = View.VISIBLE
+                textSub.isSelected = true
             } else {
                 textSub.visibility = View.GONE
             }
@@ -115,8 +104,6 @@ class PresentationHandler(context: Context, display: Display?) : Presentation(co
             textClock.setTextColor(Color.WHITE)
             textSub.setTextColor(Color.LTGRAY)
         }
-        
-        startAnimations()
     }
 
     private fun loadDefaultBackground() {

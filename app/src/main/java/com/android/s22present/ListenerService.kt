@@ -100,16 +100,12 @@ class NotificationService : NotificationListenerService() {
 
         val template = extras.getString(Notification.EXTRA_TEMPLATE)
         val token = extras.getParcelable<MediaSession.Token>(Notification.EXTRA_MEDIA_SESSION)
-        val isMediaNotification = template?.contains("MediaStyle") == true || token != null
+        val isMedia = template?.contains("MediaStyle") == true || token != null
 
         // Handle Media
-        if (isMediaNotification) {
-            if (processMediaPlayback(sbn)) {
-                Globals.musicPlaying = true
-            } else {
-                Globals.musicPlaying = false
-                Globals.musicArtwork = null
-            }
+        if (isMedia) {
+            val isPlaying = processMediaPlayback(sbn)
+            Globals.musicPlaying = isPlaying
             Globals.onStateChanged?.invoke()
             return
         }
