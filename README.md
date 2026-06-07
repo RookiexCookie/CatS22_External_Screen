@@ -18,12 +18,11 @@ Welcome to **Flip Face**! This app completely transforms the tiny front screen o
 
 ## Screenshots
 
-*(Upload your screenshots to a folder named `screenshots` on your GitHub repository to make these images visible!)*
 
 <p align="center">
-  <img src="screenshots/clock_1.jpg" width="250" />
-  <img src="screenshots/clock_2.jpg" width="250" />
-  <img src="screenshots/walkman.jpg" width="250" />
+  <img src="Screenshots/clock_1.jpg" width="250" />
+  <img src="Screenshots/clock_2.jpg" width="250" />
+  <img src="Screenshots/walkman.jpg" width="250" />
 </p>
 
 ## 🛠️ How to Install
