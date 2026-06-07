@@ -98,9 +98,18 @@ class NotificationService : NotificationListenerService() {
         val title = extras.getString("android.title")
         val text = extras.getString("android.text")
 
+        val template = extras.getString(Notification.EXTRA_TEMPLATE)
+        val token = extras.getParcelable<MediaSession.Token>(Notification.EXTRA_MEDIA_SESSION)
+        val isMediaNotification = template?.contains("MediaStyle") == true || token != null
+
         // Handle Media
-        if (processMediaPlayback(sbn)) {
-            Globals.musicPlaying = true
+        if (isMediaNotification) {
+            if (processMediaPlayback(sbn)) {
+                Globals.musicPlaying = true
+            } else {
+                Globals.musicPlaying = false
+                Globals.musicArtwork = null
+            }
             Globals.onStateChanged?.invoke()
             return
         }
